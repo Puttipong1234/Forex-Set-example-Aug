@@ -1,7 +1,7 @@
 import requests
 r = requests.post('http://127.0.0.1:5000/crypto/binance/spot', 
 json={
-        "ACTION" : "OPEN LONG" ,
+        "ACTION" : "TPSL LONG 50" ,
         "SYMBOL" : "LTCUSDT" ,
         "AMOUNT" : 10
 })

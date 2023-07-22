@@ -3,12 +3,34 @@ from config import *
 
 
 investor = Investor(
-                app_id="podzKYoZPAcfv6Ov",                                 
-                app_secret="AP0SQNpqgIobNh2l23jGPYaHs/16PzDtR0Mc/2rkGHle", 
-                broker_id="SANDBOX",
-                app_code="SANDBOX",
+                app_id=SETTRADE_APP_KEY,                                 
+                app_secret=SETTRADE_APP_SECRET, 
+                broker_id=SETTRADE_TESTING,
+                app_code=SETTRADE_TESTING,
                 is_auto_queue = False)
 
-deri = investor.Derivatives(account_no=SETTRADE_FUTURE_ACC_NO) 
+future = investor.Derivatives(account_no=SETTRADE_FUTURE_ACC_NO)
+spot = investor.Equity(account_no=SETTRADE_SPOT_ACC_NO)
 
-print(deri.get_account_info())
+
+def SETTRADE_SPOT_BUY(sym,amt):
+        spot.place_order(
+                pin=SETTRADE_PINCODE,
+                side="Buy",
+                symbol=sym,
+                volume=amt,
+                price_type = "MP-MKT",
+                price=0,
+        )
+
+def SETTRADE_SPOT_SELL(sym,amt):
+        spot.place_order(
+                pin=SETTRADE_PINCODE,
+                side="Sell",
+                symbol=sym,
+                volume=amt,
+                price_type = "MP-MKT",
+                price=0,
+        )
+
+# 4 function future (long short , tpsl , open)
