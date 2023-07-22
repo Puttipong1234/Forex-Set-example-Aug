@@ -1,15 +1,15 @@
 import ccxt
-from config import BINANCE_API_KEY , BINANCE_API_SECRET , BINANCE_TESTING
+from config import *
 
 exchange = ccxt.binance({
-        'apiKey' : BINANCE_API_KEY ,
-        'secret' : BINANCE_API_SECRET ,
+        'apiKey' : BINANCE_FUTURE_API_KEY ,
+        'secret' : BINANCE_FUTURE_API_SECRET ,
         'options' : {
                 'defaultType' : 'future'
         }
 })
 
-exchange.set_sandbox_mode(BINANCE_TESTING) # True => testnet , False => mainnet   
+exchange.set_sandbox_mode(BINANCE_FUTURE_TESTING) # True => testnet , False => mainnet   
 
 # balance = exchange.fetch_balance(params={"type" : "future","symbols" : "USDT"})
 # print(balance['info']['totalWalletBalance'])   
@@ -66,3 +66,50 @@ def binance_future_tpsl_short(sym,amount):
                               side="buy",
                               amount=amount,
                               params=param)
+
+
+exchange_spot = ccxt.binance({
+        'apiKey' : BINANCE_SPOT_API_KEY ,
+        'secret' : BINANCE_SPOT_API_SECRET ,
+        'options' : {
+                'defaultType' : 'spot'
+        }
+})
+
+exchange_spot.set_sandbox_mode(BINANCE_SPOT_TESTING)
+
+
+# r = exchange_spot.create_order(symbol="XRPUSDT",type="market",side="sell",amount=10000)
+
+# bal = exchange_spot.fetch_balance()
+# assets = bal["info"]["balances"]
+# for asset in assets:
+#         print(asset)
+
+def binance_buy_spot(sym,amt):
+        exchange_spot.create_order(symbol=sym,
+                                   type="market",
+                                   side="buy",
+                                   amount=amt)
+
+        bal = exchange_spot.fetch_balance()
+        assets = bal["info"]["balances"]
+        for asset in assets:
+                print(asset)
+
+def binance_sell_spot(sym,amt):
+        exchange_spot.create_order(symbol=sym,
+                                   type="market",
+                                   side="sell",
+                                   amount=amt)
+        bal = exchange_spot.fetch_balance()
+        assets = bal["info"]["balances"]
+        for asset in assets:
+                print(asset)
+
+def check_port():
+        bal = exchange_spot.fetch_balance()
+        assets = bal["info"]["balances"]
+        for asset in assets:
+                print(asset)
+        return assets

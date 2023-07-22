@@ -9,6 +9,31 @@ app = Flask(__name__)
 def hello_world():
     return "<p>This route is for Bot Trade Signals</p>"
 
+@app.route("/crypto/binance/spot",methods=["GET","POST"])
+def crypto_binance_spot():
+    
+    if request.method == "POST":
+        signal = request.data.decode("utf-8")
+        signal = json.loads(signal)
+        print(signal)
+        
+        trade_side = signal["ACTION"]
+        trade_symbol = signal["SYMBOL"]
+        trade_amt = signal["AMOUNT"]
+        
+        # สร้าง order ไปที่ Exchange , broker 
+        
+        if "OPEN LONG" in trade_side:
+                binance_buy_spot(trade_symbol,trade_amt)
+        
+        elif "TPSL LONG" in trade_side:
+                binance_sell_spot(trade_symbol,trade_amt)
+        
+        return "200"
+    
+    elif request.method == "GET":
+        return check_port()
+
 @app.route("/crypto/binance/future",methods=["GET","POST"])
 def crypto_binance_future():
     
