@@ -1,0 +1,5 @@
+settrade-v2
+MetaTrader5
+Flask
+requests
+ccxt
